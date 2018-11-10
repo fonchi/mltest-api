@@ -11,8 +11,8 @@ public class MlTestApplication {
 		SpringApplication.run(MlTestApplication.class, args);
 	}
 
-	@GetMapping("/")
+	@GetMapping("/hello")
 	public String hello() {
-		return "hello world!";
+		return "hello azure!";
 	}
 }

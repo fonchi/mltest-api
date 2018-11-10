@@ -1,32 +1,47 @@
 package com.exercise.mltest.domain;
 
+import com.exercise.mltest.enumeration.DnaTypeEnum;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+
+import java.util.Objects;
+
 public class Dna {
 
-    private char[][] matrix;
-    private int amountMatches = 0;
+    @Id
+    ObjectId _id;
 
-    public Dna(char[][] matrix) {
-        this.matrix = matrix;
+    private String[] dna;
+    private DnaTypeEnum dnaType;
+
+    public String get_id() {
+        return _id.toHexString();
     }
 
-    public char[][] getMatrix() {
-        return matrix;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
-    public void setMatrix(char[][] matrix) {
-        this.matrix = matrix;
+    public String[] getDna() {
+        return dna;
     }
 
-    public int getAmountMatches() {
-        return amountMatches;
+    public void setDna(String[] dna) {
+        this.dna = dna;
     }
 
-    public void setAmountMatches(int amountMatches) {
-        this.amountMatches = amountMatches;
+    public DnaTypeEnum getDnaType() {
+        return dnaType;
     }
 
-    public void incrementAmountMatches() {
-        this.amountMatches++;
+    public void setDnaType(DnaTypeEnum dnaType) {
+        this.dnaType = dnaType;
+    }
+
+    public boolean isMutant() {
+        if (!Objects.isNull(this.dnaType))
+            return this.dnaType.equals(DnaTypeEnum.MUTANT.getValue()) ? true : false;
+        return false;
     }
 
 }

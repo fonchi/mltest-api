@@ -1,6 +1,6 @@
 package com.exercise.mltest.controller;
 
-import com.exercise.mltest.dto.DnaDto;
+import com.exercise.mltest.dto.DnaRequestDto;
 import com.exercise.mltest.service.impl.DnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +18,10 @@ public class DnaController {
     @Autowired
     DnaService dnaService;
 
-    @RequestMapping(value = "/mutant", method = RequestMethod.POST)
-    public ResponseEntity<?> isMutant(@RequestBody @Valid DnaDto dnaDto) {
+    @RequestMapping(value = "/v1/mutant", method = RequestMethod.POST)
+    public ResponseEntity<?> isMutant(@RequestBody @Valid DnaRequestDto dnaRequestDto) {
 
-        if (dnaService.isMutant(dnaDto.getDna()))
+        if (dnaService.isMutant(dnaRequestDto.getDna()))
             return ResponseEntity.ok("");
 
         return ResponseEntity.status(403).body("");

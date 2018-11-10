@@ -1,7 +1,10 @@
 package com.exercise.mltest.dto;
 
-public class DnaDto {
+import javax.validation.constraints.NotNull;
 
+public class DnaRequestDto {
+
+    @NotNull
     private String[] dna;
 
     public String[] getDna() {

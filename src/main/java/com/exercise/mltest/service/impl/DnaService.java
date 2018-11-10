@@ -28,20 +28,15 @@ public class DnaService implements IDnaService {
 
         char[][] matrix = new char[dim][dim];
 
-//        JSONObject dnaJson = new JSONObject();
-//        JSONArray jsonArray = new JSONArray();
-
         for (int row = 0; row < dna.length; row++) {
             if (dna[row].length() != dim || !dna[row].matches("[" + nBases + "]+"))
                 return false;
-//            jsonArray.add(row);
             char[] line = dna[row].toCharArray();
             for (int col = 0; col < line.length; col++) {
                 matrix[row][col] = line[col];
             }
         }
-//        dnaJson.put("dna", jsonArray);
-        return validate(new Dna(matrix)/*, dnaJson*/);
+        return validate(new Dna(matrix));
     }
 
     private boolean validate(Dna dna) {

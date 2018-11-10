@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DnaValidatorTests {
 
     @Test
-    public void testIsMutantValidDnas() {
+    public void testIsMutantWithMutantDnas() {
         String[] mutant1 = {"AAAAGA", "CACCGC", "TTATGT", "AGAAGG", "ACCCTA", "TCACTG"};
         Assert.assertEquals(true, DnaValidator.isMutant(mutant1));
         String[] mutant2 = {"AAAAGA", "CACCGC", "TTATGT", "AGAAGG", "ACCCTA", "TCACTG"};
@@ -30,7 +30,7 @@ public class DnaValidatorTests {
     }
 
     @Test
-    public void testIsMutantInvalidDnas() {
+    public void testIsMutantWithHumanDnas() {
         String[] human1 = {"CGTACA", "CACGTA", "CGTACA", "ACACGT", "GTACAC", "TACACG"};
         Assert.assertEquals(false, DnaValidator.isMutant(human1));
         String[] human2 = {"CCCAGT", "GAGCTA", "TCTAAC", "AGACCA", "CTCGAC", "AAATCG"};

@@ -40,6 +40,8 @@ public class DnaStatsDto {
 
     @JsonProperty("ratio")
     public float getRatio() {
+        if (countMutantDna == 0 && countHumanDna == 0)
+            return 0;
         float ratio = countMutantDna / (countMutantDna + countHumanDna);
         BigDecimal bd = new BigDecimal(ratio);
         bd = bd.setScale(2, BigDecimal.ROUND_UP);

@@ -2,7 +2,9 @@ package com.exercise.mltest.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class DnaRequestDto {
+public class DnaDto {
+
+    private static final long serialVersionUID = -6624726180748515507L;
 
     @NotNull
     private String[] dna;

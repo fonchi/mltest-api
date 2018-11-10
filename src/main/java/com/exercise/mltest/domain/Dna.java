@@ -39,8 +39,8 @@ public class Dna {
     }
 
     public boolean isMutant() {
-        if (!Objects.isNull(this.dnaType))
-            return this.dnaType.equals(DnaTypeEnum.MUTANT.getValue()) ? true : false;
+        if (Objects.nonNull(this.dnaType))
+            return this.dnaType.equals(DnaTypeEnum.MUTANT) ? true : false;
         return false;
     }
 

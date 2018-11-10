@@ -1,6 +1,7 @@
 package com.exercise.mltest.service.impl;
 
 import com.exercise.mltest.domain.Dna;
+import com.exercise.mltest.dto.DnaStatsDto;
 import com.exercise.mltest.enumeration.DnaTypeEnum;
 import com.exercise.mltest.repository.DnaRepository;
 import com.exercise.mltest.service.IDnaService;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -21,9 +23,14 @@ public class DnaService implements IDnaService {
     DnaRepository dnaRepository;
 
     @Override
-    public boolean isMutant(String[] dna) {
+    public boolean isMutantV1(String[] dna) {
+        return DnaValidator.isMutant(dna);
+    }
+
+    @Override
+    public boolean isMutantV2(String[] dna) {
         Dna dnaEntity = getDna(dna);
-        if (!Objects.isNull(dnaEntity))
+        if (Objects.nonNull(dnaEntity))
             return dnaEntity.isMutant();
 
         boolean isMutant = DnaValidator.isMutant(dna);
@@ -47,4 +54,11 @@ public class DnaService implements IDnaService {
         return dnaRepository.save(dna);
     }
 
+    @Override
+    public DnaStatsDto getStats() {
+        List<Dna> mutantDnas = dnaRepository.findByDnaType(DnaTypeEnum.MUTANT);
+        List<Dna> humanDnas = dnaRepository.findByDnaType(DnaTypeEnum.HUMAN);
+
+        return new DnaStatsDto(mutantDnas.size(), humanDnas.size());
+    }
 }

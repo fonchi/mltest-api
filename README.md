@@ -1,2 +1,2 @@
 # mltest-api
-REST API Mercadolibre Exercise
+Mercadolibre Test API REST

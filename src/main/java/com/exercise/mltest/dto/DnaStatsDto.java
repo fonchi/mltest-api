@@ -8,43 +8,41 @@ public class DnaStatsDto {
 
     private static final long serialVersionUID = 6624726180748515507L;
 
-    private float countMutantDna;
-    private float countHumanDna;
+    private int countMutantDna;
+    private int countHumanDna;
     private float ratio;
 
     public DnaStatsDto() {
     }
 
-    public DnaStatsDto(float countMutantDna, float countHumanDna) {
+    public DnaStatsDto(int countMutantDna, int countHumanDna) {
         this.countMutantDna = countMutantDna;
         this.countHumanDna = countHumanDna;
     }
 
     @JsonProperty("count_mutant_dna")
-    public float getCountMutantDna() {
+    public int getCountMutantDna() {
         return countMutantDna;
     }
 
-    public void setCountMutantDna(float countMutantDna) {
+    public void setCountMutantDna(int countMutantDna) {
         this.countMutantDna = countMutantDna;
     }
 
     @JsonProperty("count_human_dna")
-    public float getCountHumanDna() {
+    public int getCountHumanDna() {
         return countHumanDna;
     }
 
-    public void setCountHumanDna(float countHumanDna) {
+    public void setCountHumanDna(int countHumanDna) {
         this.countHumanDna = countHumanDna;
     }
 
     @JsonProperty("ratio")
     public float getRatio() {
-        if (countMutantDna == 0 && countHumanDna == 0)
+        if (countHumanDna <= 0)
             return 0;
-        float ratio = countMutantDna / (countMutantDna + countHumanDna);
-        BigDecimal bd = new BigDecimal(ratio);
-        bd = bd.setScale(2, BigDecimal.ROUND_UP);
-        return bd.floatValue();
+        float ratio = countMutantDna / countHumanDna;
+        return new BigDecimal(ratio).setScale(2, BigDecimal.ROUND_UP).floatValue();
     }
 }

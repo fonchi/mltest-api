@@ -10,6 +10,6 @@ public interface DnaRepository extends MongoRepository<Dna, String> {
 
     public Dna findOneByDna(String[] dna);
 
-    public List<Dna> findByDnaType(DnaTypeEnum dnaType);
+    public int countByDnaType(DnaTypeEnum dnaType);
 
 }

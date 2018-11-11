@@ -1,8 +1,13 @@
 package com.exercise.mltest.controller;
 
+import com.exercise.mltest.domain.Dna;
+import com.exercise.mltest.domain.DnaStats;
 import com.exercise.mltest.dto.DnaDto;
 import com.exercise.mltest.dto.DnaStatsDto;
-import com.exercise.mltest.service.impl.DnaService;
+import com.exercise.mltest.enumeration.DnaTypeEnum;
+import com.exercise.mltest.service.DnaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,34 +22,63 @@ import java.util.Objects;
 @RequestMapping("dnas")
 public class DnaController {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     DnaService dnaService;
 
+    private String invalidDna = "Dna format is invalid. " +
+            "Please, make sure it has NxN dimension and contains allowed characters.";
+
     @RequestMapping(value = "/mutant", method = RequestMethod.POST, headers = "X-API-Version=1")
-    public ResponseEntity<?> isMutantDnaV1(@RequestBody @Valid DnaDto dnaDto) {
+    public ResponseEntity<?> mutantValidationVersion1(@RequestBody @Valid DnaDto dnaDto) {
 
-        if (dnaService.isMutantV1(dnaDto.getDna()))
+        logger.debug("Getting matrix DNA from strings array");
+        char[][] matrixDna = dnaService.getMatrixDna(dnaDto.getDna());
+        if (Objects.isNull(matrixDna)) {
+            logger.debug("DNA contains invalid format");
+            return ResponseEntity.status(400).body(invalidDna);
+        }
+        if (dnaService.isMutant(matrixDna)) {
+            logger.debug("DNA is mutant");
             return ResponseEntity.ok("");
-
+        }
+        logger.debug("DNA is human");
         return ResponseEntity.status(403).body("");
     }
 
     @RequestMapping(value = "/mutant", method = RequestMethod.POST, headers = "X-API-Version=2")
-    public ResponseEntity<?> isMutantDnaV2(@RequestBody @Valid DnaDto dnaDto) {
+    public ResponseEntity<?> mutantValidationVersion2(@RequestBody @Valid DnaDto dnaDto) {
 
-        if (dnaService.isMutantV2(dnaDto.getDna()))
+        logger.debug("Searching if DNA was saved in DB");
+        Dna dna = dnaService.getDna(dnaDto.getDna());
+        if (Objects.isNull(dna)) {
+            logger.debug("DNA wasn't in DB. Getting matrix DNA from strings array");
+            char[][] matrixDna = dnaService.getMatrixDna(dnaDto.getDna());
+            if (Objects.isNull(matrixDna)) {
+                logger.debug("DNA contains invalid format");
+                return ResponseEntity.status(400).body(invalidDna);
+            }
+            logger.debug("Saving validated DNA in DB");
+            dna = dnaService.saveDna(new Dna(dnaDto.getDna(), dnaService.isMutant(matrixDna) ?
+                    DnaTypeEnum.MUTANT : DnaTypeEnum.HUMAN));
+        }
+        if (dna.isMutant()) {
+            logger.debug("DNA is mutant");
             return ResponseEntity.ok("");
-
+        }
+        logger.debug("DNA is human");
         return ResponseEntity.status(403).body("");
     }
 
     @RequestMapping(value = "/stats", method = RequestMethod.GET, headers = "X-API-Version=2")
     public ResponseEntity<?> getDnaStats() {
 
-        DnaStatsDto dto = dnaService.getStats();
-        if (Objects.nonNull(dto))
-            return ResponseEntity.ok(dto);
-
+        logger.debug("Getting DNA stats");
+        DnaStats dnaStats = dnaService.getStats();
+        if (Objects.nonNull(dnaStats))
+            return ResponseEntity.ok(new DnaStatsDto(dnaStats.getCountMutantDna(),
+                    dnaStats.getCountHumanDna(), dnaStats.getMutantRatio()));
         return ResponseEntity.status(403).body("");
     }
 

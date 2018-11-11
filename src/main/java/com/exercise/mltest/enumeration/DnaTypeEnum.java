@@ -7,20 +7,6 @@ public enum DnaTypeEnum {
     private String value;
 
     private DnaTypeEnum(String value) {
-
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public static DnaTypeEnum getEnum(String value) {
-        for (DnaTypeEnum enumeration : DnaTypeEnum.values()) {
-            if (enumeration.name().equals(value)) {
-                return enumeration;
-            }
-        }
-        return null;
     }
 }

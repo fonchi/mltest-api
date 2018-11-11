@@ -14,6 +14,14 @@ public class Dna {
     private String[] dna;
     private DnaTypeEnum dnaType;
 
+    public Dna() {
+    }
+
+    public Dna(String[] dna, DnaTypeEnum dnaType) {
+        this.dna = dna;
+        this.dnaType = dnaType;
+    }
+
     public String get_id() {
         return _id.toHexString();
     }

@@ -2,22 +2,21 @@ package com.exercise.mltest.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
-
 public class DnaStatsDto {
 
     private static final long serialVersionUID = 6624726180748515507L;
 
     private int countMutantDna;
     private int countHumanDna;
-    private float ratio;
+    private float mutantRatio;
 
     public DnaStatsDto() {
     }
 
-    public DnaStatsDto(int countMutantDna, int countHumanDna) {
+    public DnaStatsDto(int countMutantDna, int countHumanDna, float mutantRatio) {
         this.countMutantDna = countMutantDna;
         this.countHumanDna = countHumanDna;
+        this.mutantRatio = mutantRatio;
     }
 
     @JsonProperty("count_mutant_dna")
@@ -39,10 +38,12 @@ public class DnaStatsDto {
     }
 
     @JsonProperty("ratio")
-    public float getRatio() {
-        if (countHumanDna <= 0)
-            return 0;
-        float ratio = countMutantDna / countHumanDna;
-        return new BigDecimal(ratio).setScale(2, BigDecimal.ROUND_UP).floatValue();
+    public float getMutantRatio() {
+        return mutantRatio;
     }
+
+    public void setMutantRatio(float mutantRatio) {
+        this.mutantRatio = mutantRatio;
+    }
+
 }

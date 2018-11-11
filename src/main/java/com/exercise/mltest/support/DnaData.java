@@ -13,16 +13,8 @@ public class DnaData {
         return matrix;
     }
 
-    public void setMatrix(char[][] matrix) {
-        this.matrix = matrix;
-    }
-
     public int getMatchesAmount() {
         return matchesAmount;
-    }
-
-    public void setMatchesAmount(int matchesAmount) {
-        this.matchesAmount = matchesAmount;
     }
 
     public void incrementMatchesAmount() {

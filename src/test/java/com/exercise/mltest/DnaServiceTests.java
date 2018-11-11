@@ -5,7 +5,6 @@ import com.exercise.mltest.domain.DnaStats;
 import com.exercise.mltest.enumeration.DnaTypeEnum;
 import com.exercise.mltest.repository.DnaRepository;
 import com.exercise.mltest.service.DnaService;
-import com.exercise.mltest.service.impl.DnaServiceImpl;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,9 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,15 +22,6 @@ import static org.mockito.ArgumentMatchers.any;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DnaServiceTests {
-
-    @TestConfiguration
-    static class EmployeeServiceImplTestContextConfiguration {
-
-        @Bean
-        public DnaService dnaService() {
-            return new DnaServiceImpl();
-        }
-    }
 
     @Autowired
     private DnaService dnaService;
@@ -138,7 +126,7 @@ public class DnaServiceTests {
      * getStats() success test
      */
     @Test
-    public void testGetDnaStats() {
+    public void whenGetDnaStats_thenShouldReturnStats() {
         DnaStats stats = new DnaStats(40, 100);
         DnaStats found = dnaService.getStats();
         assertThat(found.getCountMutantDna()).isEqualTo(stats.getCountMutantDna());

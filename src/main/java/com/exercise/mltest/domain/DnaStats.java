@@ -4,6 +4,9 @@ import org.springframework.data.annotation.Transient;
 
 import java.math.BigDecimal;
 
+/**
+ * DNA stadistics entity
+ */
 public class DnaStats {
 
     @Transient

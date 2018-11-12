@@ -22,6 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Unit tests for verify DNA Controller endpoints
+ */
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = DnaController.class, secure = false)
 public class DnaControllerTests {

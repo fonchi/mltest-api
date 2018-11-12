@@ -30,6 +30,13 @@ public class DnaController {
     private String invalidDna = "Dna format is invalid. " +
             "Please, make sure it has NxN dimension and contains allowed characters.";
 
+    /**
+     * Endpoint for excercise level 2.
+     * That receives a DNA and then verifies if it is mutant
+     *
+     * @param dnaDto
+     * @return
+     */
     @RequestMapping(value = "/mutant", method = RequestMethod.POST, headers = "X-API-Version=1")
     public ResponseEntity<?> mutantValidationVersion1(@RequestBody @Valid DnaDto dnaDto) {
 
@@ -47,6 +54,13 @@ public class DnaController {
         return ResponseEntity.status(403).body("");
     }
 
+    /**
+     * Endpoint for excercise level 3.
+     * That receives a DNA and verifies if it is mutant, previously verifying if it exists persisted in database
+     *
+     * @param dnaDto
+     * @return
+     */
     @RequestMapping(value = "/mutant", method = RequestMethod.POST, headers = "X-API-Version=2")
     public ResponseEntity<?> mutantValidationVersion2(@RequestBody @Valid DnaDto dnaDto) {
 
@@ -71,6 +85,12 @@ public class DnaController {
         return ResponseEntity.status(403).body("");
     }
 
+    /**
+     * Endpoint for excercise level 3
+     * That returns count of mutant and human DNAs stored in database and proportion of mutant DNAs respect to human DNAs
+     *
+     * @return dnaStatsDto
+     */
     @RequestMapping(value = "/stats", method = RequestMethod.GET, headers = "X-API-Version=2")
     public ResponseEntity<?> getDnaStats() {
 

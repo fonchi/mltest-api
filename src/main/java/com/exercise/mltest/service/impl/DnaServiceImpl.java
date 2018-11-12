@@ -24,6 +24,12 @@ public class DnaServiceImpl implements DnaService {
     @Autowired
     DnaRepository dnaRepository;
 
+    /**
+     * Receives DNA array and returns it like NxN char matrix when it is valid
+     *
+     * @param dna
+     * @return
+     */
     @Override
     public char[][] getMatrixDna(String[] dna) {
         int dim = dna.length;
@@ -42,21 +48,44 @@ public class DnaServiceImpl implements DnaService {
         return matrix;
     }
 
+    /**
+     * Validates if DNA is mutant returning true
+     *
+     * @param dna
+     * @return
+     */
     @Override
     public boolean isMutant(char[][] dna) {
         return validateMutant(new DnaData(dna));
     }
 
+    /**
+     * Returns DNA stored in DB by DNA array
+     *
+     * @param dna
+     * @return
+     */
     @Override
     public Dna getDna(String[] dna) {
         return dnaRepository.findOneByDna(dna);
     }
 
+    /**
+     * Saves DNA in DB
+     *
+     * @param dna
+     * @return
+     */
     @Override
     public Dna saveDna(Dna dna) {
         return dnaRepository.save(dna);
     }
 
+    /**
+     * Returns DNA statistics based on stored DNAs
+     *
+     * @return
+     */
     @Override
     public DnaStats getStats() {
         int mutantsAmount = dnaRepository.countByDnaType(DnaTypeEnum.MUTANT);
@@ -64,6 +93,12 @@ public class DnaServiceImpl implements DnaService {
         return new DnaStats(mutantsAmount, humansAmount);
     }
 
+    /**
+     * Algorithm that validates if a DNA is mutant
+     *
+     * @param data
+     * @return
+     */
     private boolean validateMutant(DnaData data) {
         char[][] matrix = data.getMatrix();
         for (int row = 0; row < matrix.length; row++) {
@@ -116,6 +151,17 @@ public class DnaServiceImpl implements DnaService {
         validate(data, data.getMatrix()[row][col], row + 1, col - 1, -1, IterateEnum.DIAG, 1);
     }
 
+    /**
+     * Recursive algorithm for validation
+     *
+     * @param data
+     * @param letter
+     * @param row
+     * @param col
+     * @param direction
+     * @param iterate
+     * @param counter
+     */
     private void validate(DnaData data, char letter, int row, int col, int direction, IterateEnum iterate, Integer counter) {
 
         logger.debug("Comparing letter={}, with row={}, col={}, direction={}, and iterate={}", letter, row, col, direction, iterate);

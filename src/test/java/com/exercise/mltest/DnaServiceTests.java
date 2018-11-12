@@ -19,6 +19,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 
+/**
+ * Unit tests for verify DNA Service methods
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DnaServiceTests {

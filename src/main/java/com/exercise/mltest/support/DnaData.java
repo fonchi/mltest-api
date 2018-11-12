@@ -1,5 +1,8 @@
 package com.exercise.mltest.support;
 
+/**
+ * Support class for wrapping the recursive algorithm data passed by "reference"
+ */
 public class DnaData {
 
     private char[][] matrix;

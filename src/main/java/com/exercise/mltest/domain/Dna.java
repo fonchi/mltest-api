@@ -6,6 +6,9 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
+/**
+ * DNA entity
+ */
 public class Dna {
 
     @Id

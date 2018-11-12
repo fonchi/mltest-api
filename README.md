@@ -29,10 +29,11 @@ To Run
 ### POST /dnas/mutant
 Example: POST  https://mercadolibre-test.azurewebsites.net/api/dnas/mutant
 - Headers:
+    - Content-Type = application/json
     - X-API-Version = 1 (it uses endpoint that only validates DNA)
     - X-API-Version = 2 (it uses endpoint that validates DNA and saves in database)
 
-##### Valid DNA
+##### Mutant DNA
 Request body:
     
     {
@@ -41,7 +42,7 @@ Request body:
 
 Response: *HTTP 200-OK*
 
-##### Invalid DNA
+##### Human DNA
 Request body:
     
     {
@@ -50,10 +51,20 @@ Request body:
 
 Response: *HTTP 403-Forbidden*
 
+##### Invalid DNA
+Request body:
+    
+    {
+        "dna":["A", "CC", "ACA", "ACGT"]
+    }
+
+Response: *HTTP 400-BadRequest*
+
 ### GET /dnas/stats
 Example: GET  https://mercadolibre-test.azurewebsites.net/api/dnas/stats
 - Headers:
-    - X-API-Version = 2 (required)
+    - Content-Type = application/json
+    - X-API-Version = 2
 
 Response: *HTTP 200-OK*
     
